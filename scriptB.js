@@ -1,4 +1,1 @@
-let numero1 = 10;
-const numero2 = 5;
-
-console.log("suma: " + numero1 + numero2);
+console.log(`La suma de los números es: ${numero1 + numero2}`);
