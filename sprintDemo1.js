@@ -1,4 +1,4 @@
-let opciones = prompt("1. Suma de dos números\n2.- Cuenta regresiva de un número mayor a 10 hasta 0 \n 3. Crear saludo interpolando nombre y edad")
+let opciones = prompt("1. Suma de dos números\n2. Cuenta regresiva de un número mayor a 10 hasta 0 \n3. Crear saludo interpolando nombre y edad")
 
 switch (opciones) {
     case "1":
