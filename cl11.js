@@ -16,12 +16,13 @@ const carro2 = {
 //Solicitud de información al usuario
 let respuesta = prompt("¿De que carro dese saber la información? (1 o 2)");
 
+//Función para mostrar la información del carro seleccionado
 const mostrarInfoCarro =(respuesta)=> console.table(respuesta === "1" ? carro1 : carro2);
 
 //Validación de la respuesta y despliegue de la información
 if (respuesta !== "1" && respuesta !== "2") {
   console.log("Ingresaste una respuesta inválida, debiste escoger (1 o 2)");
-} else if (respuesta === "1" || respuesta === "2") {  //Crear función que devuelva una tabla de la opción seleccionada
+} else {  //Crear función que devuelva una tabla de la opción seleccionada
     mostrarInfoCarro(respuesta);
 }
 
