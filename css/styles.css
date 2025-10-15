@@ -66,6 +66,7 @@ header {
 .container-product {
     display: flex;
     max-width: 50vw;
+    text-align: justify;
     align-items: center;
     padding: 6% 3%; 
     
@@ -73,6 +74,7 @@ header {
 
 .container-product a {
     display: flex;
-    margin-top: 50px;
+    margin-top: 30px;
+    text-align: center;
     max-width: 8vw;
 }
