@@ -62,3 +62,17 @@ header {
     font-weight: bold;
     color: #27ae60;
 }
+
+.container-product {
+    display: flex;
+    max-width: 50vw;
+    align-items: center;
+    padding: 6% 3%; 
+    
+}
+
+.container-product a {
+    display: flex;
+    margin-top: 50px;
+    max-width: 8vw;
+}
