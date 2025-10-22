@@ -28,41 +28,22 @@
     <form>
       <div class="mb-3">
         <label class="form-label">Email address</label>
-        <input id="email-user" type="email" class="form-control" />
+        <input id="email-user" type="email" class="form-control" required />
       </div>
       <div class="mb-3">
         <label class="form-label">Password</label>
-        <input id="password-user" type="password" class="form-control" />
+        <input
+          id="password-user"
+          type="password"
+          class="form-control"
+          required
+        />
       </div>
       <button id="check" type="submit" class="btn btn-primary">Submit</button>
+      <br />
+      <span id="errorMessage"></span>
     </form>
-    <script>
-      //Predefinimos valores correctos para el inicio de sesion
-      const email = "soyun@correo.com";
-      const password = "pro123";
-      //Capturamos el boton para enviar
-      const buttonValidate = document.querySelector("#check");
-
-      //Funcion para validar si el correo y la contraseña son correctas
-      function validateCredentials() {
-        //Evita que se recargue la pagina
-        event.preventDefault();
-        let inputEmail = document
-          .querySelector("#email-user")
-          .value.toLowerCase();
-        let inputPassword = document.querySelector("#password-user").value;
-
-        if (inputEmail === email && inputPassword === password) {
-          localStorage.setItem("email", email);
-          window.location.href = "./index.html";
-        } else {
-          document.querySelector("#email-user").value = "";
-          document.querySelector("#password-user").value = "";
-          alert("Que intentas chaval, esta mal la contraseña!");
-        }
-      }
-
-      buttonValidate.addEventListener("click", validateCredentials);
-    </script>
+    <script src="./data/credentials.js"></script>
+    <script src="./js/login.js"></script>
   </body>
 </html>
