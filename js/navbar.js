@@ -32,9 +32,16 @@ function login() {
   window.location.href = "./login.html";
 }
 
+function logged() {
+  localStorage.removeItem("email");
+  window.location.href = "./index.html";
+}
+
 const authSection = document.querySelector("#login");
 
 authSection.innerHTML = `${localStorage.getItem("email")
-  ? `<span class="navbar-text">${localStorage.getItem("email")}</span>`
-  : '<button class="btn btn-outline-primary" type="submit" onclick="login()">Login</button>'
+  ? `<span class="navbar-text me-4">${localStorage.getItem("email")}</span>
+    <button class="btn btn-outline-danger" type="submit" onclick="logged()">Log out</button>   
+  `
+  : '<button class="btn btn-outline-primary me-4" type="submit" onclick="login()">Login</button>'
 }`;
