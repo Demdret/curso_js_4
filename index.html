@@ -7,19 +7,21 @@
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-      crossorigin="anonymous"></script>
+      crossorigin="anonymous"
+    ></script>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-      crossorigin="anonymous" />
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
     <header>
       <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">E-Commerce</a>
+          <a class="navbar-brand" href="index.html">E-Commerce</a>
           <button
             class="navbar-toggler"
             type="button"
@@ -27,7 +29,8 @@
             data-bs-target="#navbarNav"
             aria-controls="navbarNav"
             aria-expanded="false"
-            aria-label="Toggle navigation">
+            aria-label="Toggle navigation"
+          >
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
@@ -38,6 +41,15 @@
           <div id="login">
 
           </div>
+        </div>
+        <div id="dataUser">
+          <button
+            type="button"
+            class="btn btn-primary"
+            onclick="location.href = './login.html'"
+          >
+            Iniciar Sesion
+          </button>
         </div>
       </nav>
     </header>
@@ -51,17 +63,20 @@
             class="form-control"
             placeholder=""
             aria-label=""
-            aria-describedby="basic-addon1" />
+            aria-describedby="basic-addon1"
+          />
           <div class="input-group-prepend">
             <button
               id="btnClean"
               class="btn btn-outline-secondary"
-              type="button">
+              type="button"
+            >
               <img
                 src="img/botebasura.png"
                 alt="Eliminar"
                 width="24"
-                height="24" />
+                height="24"
+              />
             </button>
           </div>
         </div>

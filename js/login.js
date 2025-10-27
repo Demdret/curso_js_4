@@ -1,24 +1,26 @@
-//Predefinimos valores correctos para el inicio de sesion
-    const email = "soyun@correo.com";
-    const password = "pro123";
-//Capturamos el boton para enviar
-    const buttonValidate = document.querySelector("#check");
+const formLogin = document.querySelector("form");
+const spanError = document.querySelector("#errorMessage");
+const urls = new URLSearchParams(window.location.search);
 
-//Funcion para validar si el correo y la contraseña son correctas
-function validateCredentials(event){
-        //Evita que se recargue la pagina
-        event.preventDefault();
-        let inputEmail = document.querySelector("#email-user").value.toLowerCase();
-        let inputPassword = document.querySelector("#password-user").value;
-        
-        if(inputEmail === email && inputPassword === password){
-        localStorage.setItem("email", email);
-        window.location.href = "./index.html";
-        } else {
-            document.querySelector("#email-user").value = "";
-            document.querySelector("#password-user").value = "";
-            alert("Que intentas chaval, esta mal la contraseña!");
-        }
-    }
+formLogin.addEventListener("submit", (event) => {
+  event.preventDefault();
 
-buttonValidate.addEventListener("click", validateCredentials);
+  const email = event.target.elements[0].value;
+  const password = event.target.elements[1].value;
+
+  const validEmail = email === auth.email;
+
+  const validPassword = password === auth.password;
+
+  if (validEmail && validPassword) {
+    localStorage.setItem("email", email);
+
+    location.href = `${urls.get("redirect")}?id=${urls.get("id")}`;
+    return;
+  }
+
+  console.error("Autentificacion fallida. \nCredenciales Invalidas");
+
+  spanError.style.textColor = "red";
+  spanError.innerText = "Credenciales Invalidas";
+});

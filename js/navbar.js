@@ -28,20 +28,28 @@ for (const route of routes) {
   <a class="nav-link active" href="${route.path}.html">${route.name}</a></li>`;
 }
 
-function login() {
-  window.location.href = "./login.html";
-}
+const dataUser = document.querySelector("#dataUser");
+const email = localStorage.getItem("email");
+const pathname = window.location.pathname.split("/")[1];
+const search = new URLSearchParams(window.location.search).get("id");
 
-function logged() {
-  localStorage.removeItem("email");
-  window.location.href = "./index.html";
-}
-
-const authSection = document.querySelector("#login");
-
-authSection.innerHTML = `${localStorage.getItem("email")
-  ? `<span class="navbar-text me-4">${localStorage.getItem("email")}</span>
-    <button class="btn btn-outline-danger" type="submit" onclick="logged()">Log out</button>   
-  `
-  : '<button class="btn btn-outline-primary me-4" type="submit" onclick="login()">Login</button>'
-}`;
+console.log(search);
+email
+  ? (dataUser.innerHTML = `Hola! ${localStorage.getItem("email")}
+      <button
+          type="button"
+          class="btn btn-danger"
+          onclick="localStorage.removeItem('email'); window.location.reload();"
+        >
+          Cerrar Sesion
+      </button>`)
+  : (dataUser.innerHTML = `
+      <button
+          type="button"
+          class="btn btn-primary"
+          onclick="location.href = './login.html?redirect=${pathname}${
+      search ? "&id=" + search : ""
+    }'"
+        >
+          Iniciar Sesion
+      </button>`);
