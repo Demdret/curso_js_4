@@ -14,6 +14,7 @@ formLogin.addEventListener("submit", (event) => {
 
   if (validEmail && validPassword) {
     localStorage.setItem("email", email);
+    localStorage.setItem("cart", JSON.stringify([]));
 
     location.href = `${urls.get("redirect")}?id=${urls.get("id")}`;
     return;
