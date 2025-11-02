@@ -23,18 +23,17 @@ renderCards(data);
 function filterData() {
   const filter = input.value.trim().toLowerCase();
   let cantidadLetras = input.value.length;
-  if(cantidadLetras >= 3){
+  if (cantidadLetras >= 3) {
     const filterData = data.filter(
-    (guitarras) =>
-      guitarras.marca.toLowerCase().includes(filter) ||
-      guitarras.modelo.toLowerCase().includes(filter)
+      (guitarras) =>
+        guitarras.marca.toLowerCase().includes(filter) ||
+        guitarras.modelo.toLowerCase().includes(filter)
     );
 
     renderCards(filterData);
   } else {
     renderCards(data);
   }
-  
 }
 
 function mostrarCards() {

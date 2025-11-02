@@ -2,7 +2,7 @@ const id = Number(new URLSearchParams(window.location.search).get("id"));
 
 const main = document.querySelector("main section");
 
-const guitarras = data.find((guitarras) => guitarras.id === id);
+const guitarra = data.find((guitarras) => guitarras.id === id);
 
 const showData = () => {
   const email = localStorage.getItem("email");
@@ -12,30 +12,34 @@ const showData = () => {
   return `
   <div>
     <button onClick="updateQuantity('-')">-</button>
-    <span id="quantity">1</span>
+    <input type="number" id="quantity" min="1" value="1"></input>
     <button onClick="updateQuantity('+')">+</button>
+    <button class="btn btn-primary ms-3" onClick="addToCart()">Agregar al carrito</button>
   </div>`;
 };
 
-if (guitarras) {
+if (guitarra) {
   const productoMain = `
                 <div id="height-img" class="card ms-5 me-4 mb-5 mt-5">
                     <img src="${
-                      guitarras.imagen
+                      guitarra.imagen
                     }" class="card-img-top" style ="width:300px;" alt="${
-    guitarras.descripcionLarga
+    guitarra.descripcionLarga
   }">
                 </div>
                 <div class="card container-product mb-5 mt-5">
                     <div class="container-product-info">
-                        <h5 class="card-title">${guitarras.marca}</h5>
+                        <h5 class="card-title">${guitarra.marca}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">${
-                          guitarras.modelo
+                          guitarra.modelo
                         }</h6>
-                        <p class="card-text">${guitarras.descripcionLarga}</p>
+                        <p class="card-text">${guitarra.descripcionLarga}</p>
                         <span style="color: green; font-weight: bold;">$${
-                          guitarras.precio
-                        }</a>
+                          guitarra.precio
+                        }</span>
+                        <p class="card-text"><strong>Stock:</strong><span id="stock">${
+                          guitarra.stock
+                        }</span></p>
                     </div>
                     ${showData()}
                 </div>
@@ -46,16 +50,67 @@ if (guitarras) {
 }
 
 const updateQuantity = (option) => {
-  const spanQuantity = document.querySelector("#quantity");
-  const quantity = Number(spanQuantity.innerText);
+  const inputQuantity = document.querySelector("#quantity");
+  const stock = Number(document.querySelector("#stock").textContent);
+  const quantity = Number(inputQuantity.value);
   switch (option) {
     case "+":
-      spanQuantity.innerText = quantity + 1;
+      quantity >= stock
+        ? alert("No puedes superar el stock disponible")
+        : (inputQuantity.value = quantity + 1);
       break;
     default:
       quantity === 1
         ? alert("No puedes tener una cantidad de 0 o menos")
-        : (spanQuantity.innerText = quantity - 1);
+        : (inputQuantity.value = quantity - 1);
       break;
   }
+};
+
+const addToCart = () => {
+  const email = localStorage.getItem("email");
+  if (!email) {
+    alert("Debes iniciar sesion para agregar productos al carrito");
+    return;
+  }
+
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const inputQuantity = document.querySelector("#quantity");
+  const quantity = Number(inputQuantity.value);
+
+  const productInCart = cart.findIndex(({ item }) => item.id === guitarra.id);
+
+  // product dont exist in cart
+  if (productInCart === -1) {
+    cart.push({ item: { ...guitarra }, quantity: quantity });
+    localStorage.setItem("cart", JSON.stringify(cart));
+    alert("Producto agregado al carrito");
+
+    cartContainerNavBar.innerHTML = `
+  <a href="cart.html">
+              <img
+                src="./assets/cart-icon.png"
+                alt="Carrito de Compras"
+                width="32"
+                height="32"
+              />
+              <span>${JSON.parse(localStorage.getItem("cart")).length}</span>
+            </a>
+            <span>|</span>
+            `;
+    return;
+  }
+
+  // product exist in cart
+  const newQuantity = cart[productInCart].quantity + quantity;
+
+  // validate if new quantity exceed stock
+  if (newQuantity > guitarra.stock) {
+    alert("No puedes superar el stock disponible");
+    return;
+  }
+
+  cart[productInCart].quantity = newQuantity;
+  localStorage.setItem("cart", JSON.stringify(cart));
+  alert("Producto agregado al carrito");
 };
