@@ -10,11 +10,14 @@ const showData = () => {
     return `<span class="text-danger">Debes tener una sesion iniciada. Por favor inicia sesion</span>`;
   }
   return `
-  <div>
-    <button class ="rounded-1" onClick="updateQuantity('-')">-</button>
+  <div class ="d-flex align-items-center">
+    <button class ="rounded-1 me-2" onClick="updateQuantity('-')">-</button>
     <input class ="rounded-1" type="number" id="quantity" min="1" value="1"></input>
-    <button class ="rounded-1" onClick="updateQuantity('+')">+</button>
-    <button class="btn btn-primary ms-3" onClick="addToCart()">Agregar al carrito</button>
+    <button class ="rounded-1 ms-2" onClick="updateQuantity('+')">+</button>
+    <button class="btn btn-primary ms-3 d-flex align-items-center justify-content-center" onClick="addToCart()">
+      <span class="material-symbols-outlined me-2">
+      shopping_cart
+      </span>Agregar al carrito</button>
   </div>`;
 };
 
@@ -68,49 +71,65 @@ const updateQuantity = (option) => {
 };
 
 const addToCart = () => {
-  const email = localStorage.getItem("email");
-  if (!email) {
-    alert("Debes iniciar sesion para agregar productos al carrito");
-    return;
-  }
+  function add() {
+    const email = localStorage.getItem("email");
+    if (!email) {
+      alert("Debes iniciar sesión para agregar productos al carrito");
+      return;
+    }
 
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  const inputQuantity = document.querySelector("#quantity");
-  const quantity = Number(inputQuantity.value);
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const inputQuantity = document.querySelector("#quantity");
+    const quantity = Number(inputQuantity.value);
 
-  const productInCart = cart.findIndex(({ item }) => item.id === guitarra.id);
+    const productInCart = cart.findIndex(({ item }) => item.id === guitarra.id);
+    let message = "";
 
-  // product dont exist in cart
-  if (productInCart === -1) {
-    cart.push({ item: { ...guitarra }, quantity: quantity });
+    if (productInCart === -1) {
+      // Producto nuevo
+      cart.push({ item: { ...guitarra }, quantity });
+      message = "Producto agregado al carrito";
+    } else {
+      // Producto existente
+      const newQuantity = cart[productInCart].quantity + quantity;
+      if (newQuantity > guitarra.stock) {
+        alert("No puedes superar el stock disponible");
+        return;
+      }
+      cart[productInCart].quantity = newQuantity;
+      message = "Cantidad actualizada en el carrito";
+    }
+
+    // Guardar carrito actualizado
     localStorage.setItem("cart", JSON.stringify(cart));
-    alert("Producto agregado al carrito");
 
-    cartContainerNavBar.innerHTML = `
-  <a href="cart.html">
-              <img
-                src="./assets/cart-icon.png"
-                alt="Carrito de Compras"
-                width="32"
-                height="32"
-              />
-              <span>${JSON.parse(localStorage.getItem("cart")).length}</span>
-            </a>
-            <span>|</span>
-            `;
-    return;
+    // Mostrar notificación Toastify
+    Toastify({
+      text: message,
+      duration: 2000,
+      gravity: "top",
+      position: "right",
+      style: {
+        background: "#1e2064ff",
+        color: "#fff",
+        borderRadius: "6px"
+      },
+    }).showToast();
   }
 
-  // product exist in cart
-  const newQuantity = cart[productInCart].quantity + quantity;
 
-  // validate if new quantity exceed stock
-  if (newQuantity > guitarra.stock) {
-    alert("No puedes superar el stock disponible");
-    return;
-  }
-
-  cart[productInCart].quantity = newQuantity;
-  localStorage.setItem("cart", JSON.stringify(cart));
-  alert("Producto agregado al carrito");
+  Swal.fire({
+    text: "¿Estás seguro que deseas añadir el producto al carrito?",
+    confirmButtonText: "Si",
+    cancelButtonText: "Cancelar",
+    showCancelButton: true,
+    showCloseButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+  }).then((result => {
+    if (result.isConfirmed) {
+      //Ejecutamos la funcion añadir al carrito
+      add();
+    }
+  }))
 };
