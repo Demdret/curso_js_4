@@ -5,8 +5,8 @@ const urls = new URLSearchParams(window.location.search);
 formLogin.addEventListener("submit", (event) => {
   event.preventDefault();
 
-  const email = event.target.elements[0].value;
-  const password = event.target.elements[1].value;
+  const email = document.querySelector("#email-user").value;
+  const password = document.querySelector("#password-user").value;  
 
   const validEmail = email === auth.email;
 
@@ -22,6 +22,6 @@ formLogin.addEventListener("submit", (event) => {
 
   console.error("Autentificacion fallida. \nCredenciales Invalidas");
 
-  spanError.style.textColor = "red";
+  spanError.style.color = "red";
   spanError.innerText = "Credenciales Invalidas";
 });

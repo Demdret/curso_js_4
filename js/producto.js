@@ -11,9 +11,9 @@ const showData = () => {
   }
   return `
   <div>
-    <button onClick="updateQuantity('-')">-</button>
-    <input type="number" id="quantity" min="1" value="1"></input>
-    <button onClick="updateQuantity('+')">+</button>
+    <button class ="rounded-1" onClick="updateQuantity('-')">-</button>
+    <input class ="rounded-1" type="number" id="quantity" min="1" value="1"></input>
+    <button class ="rounded-1" onClick="updateQuantity('+')">+</button>
     <button class="btn btn-primary ms-3" onClick="addToCart()">Agregar al carrito</button>
   </div>`;
 };
