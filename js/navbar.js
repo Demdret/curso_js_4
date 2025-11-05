@@ -68,6 +68,22 @@ const search = new URLSearchParams(window.location.search).get("id");
 
 const cartContainerNavBar = document.querySelector("#cartContainerNavBar");
 
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  cartContainerNavBar.innerHTML = `
+    <a href="cart.html">
+      <img
+        src="./assets/cart-icon.png"
+        alt="Carrito de Compras"
+        width="32"
+        height="32"
+      />
+      <span>${JSON.parse(localStorage.getItem("cart")).length}</span>
+    </a>
+    <span>|</span>
+  `;
+}
+
 const renderLoggedInUser = () => {
   dataUser.innerHTML = `Hola! ${email}
           <button
@@ -78,18 +94,7 @@ const renderLoggedInUser = () => {
               Cerrar Sesion
           </button>`;
 
-  cartContainerNavBar.innerHTML = `
-  <a href="cart.html">
-              <img
-                src="./assets/cart-icon.png"
-                alt="Carrito de Compras"
-                width="32"
-                height="32"
-              />
-              <span>${JSON.parse(localStorage.getItem("cart")).length}</span>
-            </a>
-            <span>|</span>
-            `;
+  updateCartCount();
 };
 
 const renderLoggedOutUser = () => {
