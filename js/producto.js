@@ -106,7 +106,7 @@ const addToCart = () => {
     // Mostrar notificación Toastify
     Toastify({
       text: message,
-      duration: 2000,
+      duration: 1500,
       gravity: "top",
       position: "right",
       style: {
@@ -115,6 +115,7 @@ const addToCart = () => {
         borderRadius: "6px"
       },
     }).showToast();
+    updateCartCount();
   }
 
 
