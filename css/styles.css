@@ -106,3 +106,13 @@ header {
     }
   }
 }
+
+/* Estilos para el spinner mientras carga */
+
+.spinner-loading {
+  min-height: 80vh;           
+  display: flex;              
+  justify-content: center;
+  align-items: center;
+  grid-template-columns: none; 
+}
