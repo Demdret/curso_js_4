@@ -17,8 +17,7 @@ document.querySelector("header").innerHTML = `
             <ul class="navbar-nav"></ul>
           </div>
           <div id="cartContainerNavBar"></div>
-        </div>
-        <div id="dataUser">
+        <div id="dataUser" class="ms-3">
           <button
             type="button"
             class="btn btn-primary"
@@ -27,6 +26,8 @@ document.querySelector("header").innerHTML = `
             Iniciar Sesion
           </button>
         </div>
+        </div>
+        
       </nav>
 `;
 
