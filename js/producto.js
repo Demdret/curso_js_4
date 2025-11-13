@@ -1,8 +1,8 @@
-const id = Number(new URLSearchParams(window.location.search).get("id"));
+const id = new URLSearchParams(window.location.search).get("id");
 
 const main = document.querySelector("main section");
 
-const guitarra = data.find((guitarras) => guitarras.id === id);
+let guitarra;
 
 const showData = () => {
   const email = localStorage.getItem("email");
@@ -21,14 +21,18 @@ const showData = () => {
   </div>`;
 };
 
-if (guitarra) {
-  const productoMain = `
+const initProducts = () => {
+  console.log(data);
+
+  guitarra = data.find((guitarras) => guitarras.id === id);
+  if (guitarra) {
+    const productoMain = `
                 <div id="height-img" class="card ms-5 me-4 mb-5 mt-5">
                     <img src="${
                       guitarra.imagen
                     }" class="card-img-top" style ="width:300px;" alt="${
-    guitarra.descripcionLarga
-  }">
+      guitarra.descripcionLarga
+    }">
                 </div>
                 <div class="card container-product mb-5 mt-5">
                     <div class="container-product-info">
@@ -47,10 +51,18 @@ if (guitarra) {
                     ${showData()}
                 </div>
                 `;
-  main.innerHTML = productoMain;
-} else {
-  window.location.href = "index.html";
-}
+    main.innerHTML = productoMain;
+  } else {
+    window.location.href = "index.html";
+  }
+};
+
+document.addEventListener("DOMContentLoaded", async () => {
+  // Esperar a que los datos se carguen desde la API
+  await dataPromise;
+  console.log("data main", data);
+  initProducts();
+});
 
 const updateQuantity = (option) => {
   const inputQuantity = document.querySelector("#quantity");
@@ -112,12 +124,11 @@ const addToCart = () => {
       style: {
         background: "#1e2064ff",
         color: "#fff",
-        borderRadius: "6px"
+        borderRadius: "6px",
       },
     }).showToast();
     updateCartCount();
   }
-
 
   Swal.fire({
     text: "¿Estás seguro que deseas añadir el producto al carrito?",
@@ -127,10 +138,10 @@ const addToCart = () => {
     showCloseButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
-  }).then((result => {
+  }).then((result) => {
     if (result.isConfirmed) {
       //Ejecutamos la funcion añadir al carrito
       add();
     }
-  }))
+  });
 };
