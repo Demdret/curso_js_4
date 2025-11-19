@@ -2,7 +2,7 @@ const id = new URLSearchParams(window.location.search).get("id");
 
 const main = document.querySelector("main section");
 
-let guitarra;
+let currentProduct;
 
 const showData = () => {
   const email = localStorage.getItem("email");
@@ -10,10 +10,10 @@ const showData = () => {
     return `<span class="text-danger">Debes tener una sesion iniciada. Por favor inicia sesion</span>`;
   }
   return `
-  <div class ="d-flex align-items-center">
-    <button class ="rounded-1 me-2" onClick="updateQuantity('-')">-</button>
-    <input class ="rounded-1" type="number" id="quantity" min="1" value="1"></input>
-    <button class ="rounded-1 ms-2" onClick="updateQuantity('+')">+</button>
+  <div class="d-flex align-items-center">
+    <button onClick="updateQuantity('-')">-</button>
+    <input type="number" style="border: 2px solid black" id="quantity" min="1" value="1"></input>
+    <button onClick="updateQuantity('+')">+</button>
     <button class="btn btn-primary ms-3 d-flex align-items-center justify-content-center" onClick="addToCart()">
       <span class="material-symbols-outlined me-2">
       shopping_cart
@@ -22,19 +22,41 @@ const showData = () => {
 };
 
 const initProducts = () => {
-  console.log(data);
+  fetch(`${URL_BASE}/guitars/${id}`)
+    .then((response) => response.json())
+    .then((data) => {
+      // throw new Error("xd");
+      console.log(data);
+      setTimeout(() => {
+        main.classList.remove("loader");
+        renderCard(data);
+        currentProduct = data;
+      }, 2000);
+    })
+    .catch((error) => {
+      console.error(error);
+      Swal.fire({
+        icon: "error",
+        title: "No se pudo cargar la informacion del producto",
+        confirmButtonText: "Ok",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = "/";
+        }
+      });
+    });
+};
 
-  guitarra = data.find((guitarras) => guitarras.id === id);
-  if (guitarra) {
-    const productoMain = `
-                <div id="height-img" class="card ms-5 me-4 mb-5 mt-5">
+const renderCard = (guitarra) => {
+  main.innerHTML = `
+                <div id="height-img" class="">
                     <img src="${
                       guitarra.imagen
-                    }" class="card-img-top" style ="width:300px;" alt="${
-      guitarra.descripcionLarga
-    }">
+                    }" class="card-img-top" style ="height: 300px; width: 300px; object-fit: cover;" alt="${
+    guitarra.descripcionLarga
+  }">
                 </div>
-                <div class="card container-product mb-5 mt-5">
+                <div class="container-product">
                     <div class="container-product-info">
                         <h5 class="card-title">${guitarra.marca}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">${
@@ -51,18 +73,7 @@ const initProducts = () => {
                     ${showData()}
                 </div>
                 `;
-    main.innerHTML = productoMain;
-  } else {
-    window.location.href = "index.html";
-  }
 };
-
-document.addEventListener("DOMContentLoaded", async () => {
-  // Esperar a que los datos se carguen desde la API
-  await dataPromise;
-  console.log("data main", data);
-  initProducts();
-});
 
 const updateQuantity = (option) => {
   const inputQuantity = document.querySelector("#quantity");
@@ -94,17 +105,19 @@ const addToCart = () => {
     const inputQuantity = document.querySelector("#quantity");
     const quantity = Number(inputQuantity.value);
 
-    const productInCart = cart.findIndex(({ item }) => item.id === guitarra.id);
+    const productInCart = cart.findIndex(
+      ({ item }) => item.id === currentProduct.id
+    );
     let message = "";
 
     if (productInCart === -1) {
       // Producto nuevo
-      cart.push({ item: { ...guitarra }, quantity });
+      cart.push({ item: { ...currentProduct }, quantity });
       message = "Producto agregado al carrito";
     } else {
       // Producto existente
       const newQuantity = cart[productInCart].quantity + quantity;
-      if (newQuantity > guitarra.stock) {
+      if (newQuantity > currentProduct.stock) {
         alert("No puedes superar el stock disponible");
         return;
       }
@@ -145,3 +158,5 @@ const addToCart = () => {
     }
   });
 };
+
+initProducts();
