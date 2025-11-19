@@ -70,7 +70,6 @@ const search = new URLSearchParams(window.location.search).get("id");
 const cartContainerNavBar = document.querySelector("#cartContainerNavBar");
 
 function updateCartCount() {
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
   cartContainerNavBar.innerHTML = `
     <a href="cart.html">
       <img

@@ -3,20 +3,20 @@ const main = document.querySelector("main section");
 const input = document.querySelector("#Searching");
 const buttomClean = document.querySelector("#btnClean");
 
-const spinnerHTML = `
-  <div class="d-flex justify-content-center mt-5">
-    <div class="spinner-border text-primary" role="status" style="width: 4rem; height: 4rem;">
-      <span class="visually-hidden">Cargando...</span>
-    </div>
-  </div>
-`;
+// const spinnerHTML = `
+//   <div class="d-flex justify-content-center mt-5">
+//     <div class="spinner-border text-primary" role="status" style="width: 4rem; height: 4rem;">
+//       <span class="visually-hidden">Cargando...</span>
+//     </div>
+//   </div>
+// `;
 
 function loadData() {
   //Crear clase para el spinner
-  main.classList.add("spinner-loading");
+  // main.classList.add("spinner-loading");
 
-  // Mostrar spinner
-  main.innerHTML = spinnerHTML;
+  // // Mostrar spinner
+  // main.innerHTML = spinnerHTML;
 
   // Crear promesa simulando carga de 3 segundos
   new Promise((resolve) => {
@@ -24,7 +24,6 @@ function loadData() {
       resolve(data); // data viene del archivo productos.js
     }, 3000);
   }).then((productos) => {
-    main.classList.remove("spinner-loading");
     renderCards(productos);
   });
 }

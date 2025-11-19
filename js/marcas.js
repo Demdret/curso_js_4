@@ -15,7 +15,11 @@ function mostrarProductos(guitarrasAMostrar) {
     contenedorProductos.appendChild(productoCard);
   });
 }
-document.addEventListener("DOMContentLoaded", () => {
+
+const init = async () => {
+  await dataPromise;
+  console.log(data);
+
   const marcasUnicas = ["todos"];
   data.forEach((guitarra) => {
     if (!marcasUnicas.includes(guitarra.marca)) {
@@ -54,4 +58,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
   mostrarProductos(data);
-});
+};
+
+init();
