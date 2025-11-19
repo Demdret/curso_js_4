@@ -6,7 +6,7 @@ formLogin.addEventListener("submit", (event) => {
   event.preventDefault();
 
   const email = document.querySelector("#email-user").value;
-  const password = document.querySelector("#password-user").value;  
+  const password = document.querySelector("#password-user").value;
 
   const validEmail = email === auth.email;
 
@@ -16,7 +16,17 @@ formLogin.addEventListener("submit", (event) => {
     localStorage.setItem("email", email);
     localStorage.setItem("cart", JSON.stringify([]));
 
-    location.href = `${urls.get("redirect")}?id=${urls.get("id")}`;
+    const redirect = urls.get("redirect");
+    const id = urls.get("id");
+
+    let redirectUrl = redirect || "index.html";
+    if (id && id !== null && id !== "null") {
+      redirectUrl += `?id=${id}`;
+    }
+
+    console.log(redirectUrl);
+
+    location.href = redirectUrl;
     return;
   }
 
