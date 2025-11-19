@@ -37,7 +37,8 @@ header {
 
 .producto-card img {
   width: 100%;
-  height: 250px;
+  min-height: 200px;
+  max-height: 250px;
   object-fit: cover;
   border-bottom: 1px solid #ddd;
   aspect-ratio: 16/9;
@@ -110,9 +111,28 @@ header {
 /* Estilos para el spinner mientras carga */
 
 .spinner-loading {
-  min-height: 80vh;           
-  display: flex;              
+  min-height: 80vh;
+  display: flex;
   justify-content: center;
   align-items: center;
-  grid-template-columns: none; 
+  grid-template-columns: none;
+}
+
+.loader {
+  height: 420px;
+  border-radius: 12px;
+
+  background: linear-gradient(90deg, #e3e3e3 0%, #f2f2f2 50%, #e3e3e3 100%);
+
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
 }
