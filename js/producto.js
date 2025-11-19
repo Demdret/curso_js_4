@@ -31,6 +31,7 @@ const initProducts = () => {
         main.classList.remove("loader");
         renderCard(data);
         currentProduct = data;
+        document.title = `${data.marca} ${data.modelo}`;
       }, 2000);
     })
     .catch((error) => {
